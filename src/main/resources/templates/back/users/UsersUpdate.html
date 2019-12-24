@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            //自定义验证规则
+            form.verify({
+                uimg: function(value){
+                    if(value.length < 1){
+                        return '头像不能为空';
+                    }
+                }
+                , uname: function(value){
+                    if(value.length < 1){
+                        return '名称不能为空';
+                    }
+                }
+                , upassword: function(value){
+                    if(value.length < 1){
+                        return '密码不能为空';
+                    }
+                }
+                , ustate: function(value){
+                    if(value.length < 1){
+                        return '状态不能为空';
+                    }
+                }
+            });
+
+            //监听提交
+            form.on('submit(submitBtn)', function(data){
+                var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+                //alert("监听提交"+JSON.stringify(param));//表格数据序列化 JSON.stringify(param)
+                $.ajax({
+                    url:"/users/usersUpdate",
+                    type:'post',//method请求方式，get或者post
+                    dataType:'json',//预期服务器返回的数据类型
+                    data:param,//表格数据序列化
+                    success:function(res){//res为相应体,function为回调函数
+                        if (res==1) {
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+        <input id="uid"  type="text" name="uid" th:value="${one.uid}"   class="layui-input" style="display: none;" />
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-block">
+                <input id="uimg" type="text" style="width: 400px;" name="uimg" th:value="${one.uimg}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input id="uname" type="text" style="width: 400px;" name="uname" th:value="${one.uname}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input id="upassword" type="text" style="width: 400px;" name="upassword" th:value="${one.upassword}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input id="ustate" type="text" style="width: 400px;" name="ustate" th:value="${one.ustate}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

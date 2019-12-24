@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        
+        <title>联系我们</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    </head>
+    <body>
+         <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+
+
+<section id="abovecontent" class="color_section">
+  <div class="container"><div class="row">
+      <div class="block col-sm-12">
+        <ul class="breadcrumb">
+          <li><a href="#" class="pathway">Home</a></li>
+          <li><span>Contact Us</span></li>
+        </ul>
+      </div>
+  </div></div>
+</section>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>-->
+<section id="map" class="color_section"></section>
+  <script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      addMapOverlay();//向地图添加覆盖物
+    }
+    function createMap(){ 
+      map = new BMap.Map("map"); 
+      map.centerAndZoom(new BMap.Point(114.261646,22.72421),16);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+        target.openInfoWindow(window);
+      });
+    }
+    function addMapOverlay(){
+      var markers = [
+        {content:"我的备注",title:"我的标记",imageOffset: {width:0,height:3},position:{lat:22.723943,lng:114.26064}}
+      ];
+      for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+        })});
+        var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+        var opts = {
+          width: 200,
+          title: markers[index].title,
+          enableMessage: false
+        };
+        var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+    }
+    //向地图添加控件
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+      map.addControl(navControl);
+      var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+      map.addControl(overviewControl);
+    }
+    var map;
+      initMap();
+  </script>
+
+<section id="contact" class="color_section">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-sm-8">
+        <h2 class="block-header">Get In Touch</h2>
+        <div class="contact-form">
+          <form class="contact-form" method="post" action="/">
+            <p class="contact-form-name">
+              <label for="name">Name <span class="required">*</span></label>
+              <input type="text" aria-required="true" size="30" value="" name="name" id="name" class="form-control" placeholder="Name">
+            </p>
+            <p class="contact-form-email">
+              <label for="email">Email <span class="required">*</span></label>
+              <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control" placeholder="Email">
+            </p>
+            <p class="contact-form-message">
+              <label for="message">Comment</label>
+              <textarea aria-required="true" rows="8" cols="45" name="message" id="message" class="form-control" placeholder="Message"></textarea>
+            </p>
+            <p class="contact-form-submit text-center vertical-margin-60">
+              <input type="submit" value="Send" id="contact_form_submit" name="contact_submit" class="theme_btn">
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <h3>Reach Us</h3>
+        <p><i class="rt-icon-puzzle-outline"></i> Company Name.<br> 
+          <i class="rt-icon-location-outline"></i> City, Street str., ZIP<br> 
+          <i class="rt-icon-phone"></i> (123) 456-7890<br>
+          <i class="rt-icon-email2"></i> <a href="mailto:info@company.com">info@company.com</a><br> 
+          Lorem ipsum dolor <strong>sit amet</strong>, consectetur adipisicing elit. Nobis, facere natus reprehenderit repellat quos pariatur nihil id <em>accusantium</em> corporis laudantium fugiat distinctio consectetur sapiente nostrum veritatis illum omnis non quas!
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!--脚部继承-->
+<div th:replace="fragments/footer :: footer"></div>
+
+
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+  <div class="preloaderimg"></div>
+</div>
+
+    </body>
+</html>

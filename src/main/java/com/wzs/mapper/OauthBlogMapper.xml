@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzs.dao.OauthBlogMapper">
+  <resultMap id="BaseResultMap" type="com.wzs.entity.OauthBlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="oauth_type" jdbcType="VARCHAR" property="oauthType" />
+    <result column="oauth_id" jdbcType="VARCHAR" property="oauthId" />
+    <result column="oauth_access_token" jdbcType="VARCHAR" property="oauthAccessToken" />
+    <result column="oauth_expires" jdbcType="VARCHAR" property="oauthExpires" />
+    <result column="oauth_nickname" jdbcType="VARCHAR" property="oauthNickname" />
+    <result column="oauth_gender" jdbcType="VARCHAR" property="oauthGender" />
+    <result column="oauth_avatar" jdbcType="VARCHAR" property="oauthAvatar" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+
+  <select id="getRecentOauthBlogList" resultType="com.wzs.entity.OauthBlog">
+        SELECT
+            a.oauth_nickname AS "oauthNickname",
+            a.oauth_gender AS "oauthGender",
+            a.oauth_avatar AS "oauthAvatar"
+        FROM oauth_blog a
+        WHERE
+            a.del_flag = "0"
+        ORDER BY a.update_date DESC
+    </select>
+
+</mapper>

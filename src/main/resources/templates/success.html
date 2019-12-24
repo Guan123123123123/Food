@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>天下美食</title>
+
+    <script type="text/javascript">
+        function qqLogin() {//QQ登录
+            window.location = '/account/tologin';
+        }
+        function qqLogout() {//QQ退出
+            window.location = '/account/Logout';
+        }
+
+    </script>
+</head>
+<body>
+登录成功
+<img th:if="${session.account} ne null"  th:src="${session.oauth?.oauthAvatar}?:${session.account?.aimg}" th:alt="${#object?.aname}" th:title="${#object?.aname}"  onclick="qqLogout()"  width="100px" height="100px">
+</body>
+</html>

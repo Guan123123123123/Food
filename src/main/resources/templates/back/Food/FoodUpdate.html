@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            //自定义验证规则
+            form.verify({
+                levelsname: function(value){
+                    if(value.length < 1){
+                        return '名字不能为空';
+                    }
+                }
+
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //查询修改前身份角色id
+
+            //监听提交
+            form.on('submit(submitBtn)', function(data){
+                /* var roseId =$("#roseId option:selected").val();
+                alert(roseId); */
+                var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+                alert(JSON.stringify(param));//表格数据序列化 JSON.stringify(param)
+                $.ajax({
+                    url:"/food/foodUpdate",
+                    type:'post',//method请求方式，get或者post
+                    dataType:'json',//预期服务器返回的数据类型
+                    data:param,//表格数据序列化
+                    success:function(res){//res为相应体,function为回调函数
+                        if (res==1) {
+                            /* $.ajax({
+                                url:"UpdateNum.action?cls_id="+cls_id,
+                                type:'post',
+                                dataType:'json'
+                            }); */
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+        <input id="fid"  type="text" name="fid" th:value="${food.fid}"   class="layui-input" style="display: none;" />
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">食物名称</label>
+            <div class="layui-input-block">
+                <input  id="foodname" type="text" style="width: 400px;"  name="foodname" th:value="${food.foodname}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">食物别名</label>
+            <div class="layui-input-block">
+                <input  id="foodnametwo" type="text" style="width: 400px;"  name="foodnametwo" th:value="${food.foodnametwo}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">食用量</label>
+            <div class="layui-input-block">
+                <input  id="advice" type="text" style="width: 400px;"  name="advice" th:value="${food.advice}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">适龄人群</label>
+            <div class="layui-input-block">
+                <input  id="okpeople" type="text" style="width: 400px;"  name="okpeople" th:value="${food.okpeople}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">禁忌人群</label>
+            <div class="layui-input-block">
+                <input  id="onpeople" type="text" style="width: 400px;"  name="onpeople" th:value="${food.onpeople}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类别</label>
+            <div class="layui-input-block">
+                <input  id="typeid" type="text" style="width: 400px;"  name="typeid" th:value="${food.typeid}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">功能</label>
+            <div class="layui-input-block">
+                <input  id="funtionid" type="text" style="width: 400px;"  name="funtionid" th:value="${food.funtionid}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input  id="foodimg" type="text" style="width: 400px;"  name="foodimg" th:value="${food.foodimg}"  lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

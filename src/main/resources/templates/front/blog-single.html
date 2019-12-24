@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        
+        <title>菜谱详情</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/guan/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/guan/css/animations.css">
+        <link rel="stylesheet" href="/guan/css/main.css">
+        <script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+         <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+ <!--头-->
+ <div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap"  th:each="cmap:${cookbookMap}">
+<section id="middle" class="color_section"><div class="container"><div class="row blog-single">
+  <div class="col-sm-9">
+    <div class="content-area" id="primary">
+      <div role="main" class="site-content" id="content">
+        <article class="post type-post">
+          <header class="entry-header">
+            <h4 class="entry-title"><i>人世间，唯有爱与美食不可辜负，爱已经辜负的太多了，美食就不能在辜负了___青慕</i></h4>
+            <div class="entry-thumbnail">
+              <img alt="" th:src="${cmap.cookimg}">
+            </div>
+            <div class="entry-meta">
+              好吃
+              <span class="author vcard">
+                <a rel="author" href="javascript:void(0)" class="url fn n">不贵 </a>
+              </span>
+              <span class="categories-links">
+                尽在
+                <a rel="category" href="javascript:void(0)">天下美食</a>,
+                <a rel="category" href="javascript:void(0)">捍卫 你的味蕾</a>
+              </span>
+              <span class="date">
+                健康饮食
+                  <span class="entry-date">基准理念</span>
+              </span>
+              <span class="comments-link">
+                <a href="#"></a>
+              </span>
+            </div>
+            <!-- .entry-meta -->
+          </header>
+          <!-- .entry-header -->
+          <div class="entry-content">
+            <p>食材:</p>
+            <p>
+              <span th:each=" ms : ${materials}">
+                <span th:value="${ms.materialname}" th:text="${ms.materialname}"></span>
+                <span th:text="${ms.materialliang}"></span>
+                <span style="display: inline-block;width: 5px;"></span>
+              </span>
+            </p>
+            <p>操作:</p>
+            <p th:text="${cmap.cookcontent}"></p>
+            <p>
+              <img class="alignleft" alt="" th:src="${cmap.aimg}" width="100" height="100">
+              <span th:text="${cmap.aname}"></span><br/>经验值
+              <span th:text="${cmap.accountdian}"></span><br/>称号
+              <span th:text="${cmap.levelsid}"></span><br/>粉丝量
+              <span th:text="${cmap.fensi}"></span>人
+            </p>
+
+          </div>
+          <!-- .entry-content -->
+
+
+            <div></div>
+            <div class="related-posts block">
+              <h3 style="position: relative;right:100px;">小主菜谱展示</h3>
+              <div class="row">
+
+                  <div class="col-sm-4" th:each="cp:${cplist}">
+                    <article class="post format-standard">
+                      <div class="entry-thumbnail">
+                        <img alt="" th:src="${cp.cookimg}" />
+                      </div>
+                      <h3><a th:href="@{/front/blog-single(cookid=${cp.cookid})}" th:text="${cp.cookname}"></a></h3>
+                      <p class="introtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:1;overflow: hidden;" th:text="${cp.cookcontent}"></p>
+                      <p class="entry-share">
+                          <a href="#" class="tag-link" style=" display:inline-block;width: 70px;text-align: center;background-color: #d83832;border-radius: 10px;">收藏</a>
+                          <a th:href="@{/front/blog-single(cookid=${cp.cookid})}" class="tag-link" style="display:inline-block;width: 70px;text-align: center;background-color: #d83832;border-radius: 10px;" >详情</a>
+                      </p>
+                     </article>
+                  </div>
+
+
+
+              </div>
+            </div>
+
+          <!-- .entry-meta -->
+        </article>
+        <!-- #post -->
+        
+        <div class="comments-area" id="comments">
+          <h2 class="comments-title">评论展示</h2>
+          <ol class="comment-list">
+            <li class="comment even thread-even depth-1 parent">
+              <article class="comment-body">
+                <footer class="comment-meta">
+                  <div class="comment-author vcard"> <img class="avatar" src="/guan/example/team1.jpg" alt=""> <a class="author_url" rel="external nofollow" href="#">Alan Smith</a></div>
+                  <div class="comment-metadata">
+                    <span>17.10.2013 10:30</span>
+                  </div>
+                    <div class="reply"> <a href="#" class="comment-reply-link">Reply</a> </div>
+                  <!-- .reply -->
+                <!-- .comment-metadata -->
+
+                </footer>
+                <!-- .comment-meta -->
+                
+                <div class="comment-content">
+                  <p>Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. At vero eos et accusam et justo duo dolores et ea rebum. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+                </div>
+                <!-- .comment-content -->
+                
+              </article>
+              <!-- .comment-body -->
+              <ol class="children">
+                <li class="comment byuser odd alt depth-2 parent">
+                  <article class="comment-body">
+                    <footer class="comment-meta">
+                      <div class="comment-author vcard">
+                        <img class="avatar" src="/guan/example/team2.jpg" alt="">
+                        <a class="author_url" rel="external nofollow" href="#">Alan Smith</a>
+                      </div>
+                      <!-- .comment-author -->
+                      
+                      <div class="comment-metadata"> 
+                          <span>17.10.2013 10:30</span>
+                        </div>
+                        <div class="reply"> <a href="#" class="comment-reply-link">Reply</a> </div>
+                        <!-- .reply -->
+                      <!-- .comment-metadata -->
+                      
+                    </footer>
+                    <!-- .comment-meta -->
+                    
+                    <div class="comment-content">
+                      <p>Odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. At vero eos et accusam et justo duo dolores rebum.</p>
+                    </div>
+                    <!-- .comment-content -->
+                    
+                  </article>
+                  <!-- .comment-body -->
+                  <ol class="children">
+                    <li class="comment byuser even depth-3">
+                      <article class="comment-body">
+                        <footer class="comment-meta">
+                          <div class="comment-author vcard"> <img class="avatar" src="/guan/example/team3.jpg" alt=""> <a class="author_url" rel="external nofollow" href="#">Alan Smith</a></div>
+                          <!-- .comment-author -->
+                          
+                          <div class="comment-metadata">
+                            <span>17.10.2013 10:30</span>
+                          </div>
+                            <div class="reply"> <a href="#" class="comment-reply-link">Reply</a> </div>
+                            <!-- .reply -->
+                          <!-- .comment-metadata -->
+                          
+                        </footer>
+                        <!-- .comment-meta -->
+                        
+                        <div class="comment-content">
+                          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <!-- .comment-content -->
+                        
+                      </article>
+                      <!-- .comment-body -->
+                    </li>
+                    <!-- #comment-## -->
+                  </ol>
+                  <!-- .children -->
+                </li>
+                <!-- #comment-## -->
+              </ol>
+              <!-- .children -->
+            </li>
+            <!-- #comment-## -->
+            <li class="comment byuser odd alt thread-odd thread-alt depth-1">
+              <article class="comment-body">
+                <footer class="comment-meta">
+                  <div class="comment-author vcard">
+                    <img class="avatar" src="/guan/example/team4.jpg" alt="">
+                    
+                      <a class="author_url" rel="external nofollow" href="#">Alan Smith</a>
+                    
+                  </div>
+                  <!-- .comment-author -->
+                  
+                  <div class="comment-metadata">
+                    <span>17.10.2013 10:30</span>
+                  </div>
+                    <div class="reply"> <a href="#" class="comment-reply-link">Reply</a> </div>
+                    <!-- .reply -->
+                  <!-- .comment-metadata -->
+                  
+                </footer>
+                <!-- .comment-meta -->
+                
+                <div class="comment-content">
+                  <p>Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. At vero eos et accusam et justo duo dolores et ea rebum. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+                </div>
+                <!-- .comment-content -->
+                
+              </article>
+              <!-- .comment-body -->
+            </li>
+            <!-- #comment-## -->
+            <li class="comment byuser even thread-even depth-1">
+              <article class="comment-body">
+                <footer class="comment-meta">
+                  <div class="comment-author vcard">
+                    <img class="avatar" src="/guan/example/team1.jpg" alt="">
+                    
+                      <a class="author_url" rel="external nofollow" href="#">Alan Smith</a>
+                    
+                  </div>
+                  <!-- .comment-author -->
+                  
+                  <div class="comment-metadata">
+                    <span>17.10.2013 10:30</span>
+                  </div>
+                    <div class="reply"> <a href="#" class="comment-reply-link">Reply</a> </div>
+                    <!-- .reply -->
+                  <!-- .comment-metadata -->
+                  
+                </footer>
+                <!-- .comment-meta -->
+                
+                <div class="comment-content">
+                  <p>Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. At vero eos et accusam et justo duo dolores et ea rebum. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.</p>
+                </div>
+                <!-- .comment-content -->
+                
+              </article>
+              <!-- .comment-body -->
+            </li>
+            <!-- #comment-## -->
+          </ol>
+          <!-- .comment-list -->
+          
+          <div class="comment-respond" id="respond">
+            <h3 class="comment-reply-title" id="reply-title">Leave a Comment</h3>
+            <form class="comment-form" id="commentform" method="post" action="/">
+              <p class="comment-form-author">
+                <label for="author">Name <span class="required">*</span></label>
+                <input type="text" aria-required="true" size="30" value="" name="author" id="author" class="form-control" placeholder="Name">
+              </p>
+              <p class="comment-form-email">
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control" placeholder="Enter email">
+              </p>
+              <p class="comment-form-comment">
+                <label for="comment">Comment</label>
+                <textarea aria-required="true" rows="8" cols="45" name="comment" id="comment" class="form-control" placeholder="Comment"></textarea>
+              </p>
+              <p class="form-submit">
+                <input type="submit" value="Leave a Comment" id="submit" name="submit" class="theme_btn">
+              </p>
+            </form>
+          </div>
+          <!-- #respond -->
+          
+        </div>
+        <!-- #comments -->
+        
+      </div>
+      <!-- #content -->
+    </div>
+
+  </div>
+
+
+
+  <aside class="col-sm-3">
+
+    <div class="block widget_categories">
+      <h3 th:text="${cmap.cookname}"></h3>
+      <ul>
+        <li class="cat-item">工艺：<a th:href="@{/front/detailMenuSearch(procesid=${cmap.procesid},cookid=0,speaceid=0,tasteid=0,hardid=0,styleid=0,homeid=0)}" th:title="${cmap.procesid}" th:text="${cmap.procesname}"></a></li>
+        <li class="cat-item">口味：<a th:href="@{/front/detailMenuSearch(tasteid=${cmap.tasteid},cookid=0,speaceid=0,procesid=0,hardid=0,styleid=0,homeid=0)}"  th:title="${cmap.tasteid}" th:text="${cmap.tastename}"></a></li>
+        <li class="cat-item">难度：<a th:href="@{/front/detailMenuSearch(hardid=${cmap.hardid},cookid=0,speaaaid=0,procesid=0,tasteid=0,styleid=0,homeid=0)}" th:title="${cmap.hardid}" th:text="${cmap.hardname}"></a></li>
+        <li class="cat-item">菜系：<a th:href="@{/front/detailMenuSearch(styleid=${cmap.styleid},cookid=0,speaceid=0,procesid=0,tasteid=0,hardid=0,homeid=0)}" th:title="${cmap.styleid}"th:text="${cmap.stylename}"></a></li>
+        <li class="cat-item">家常菜：<a  th:href="@{/front/detailMenuSearch(homeid=${cmap.homeid},cookid=0,speaceid=0,procesid=0,tasteid=0,hardid=0,styleid=0)}" th:title="${cmap.homeid}" th:text="${cmap.homename}"></a></li>
+        <li class="cat-item">地方菜：<a th:href="@{/front/detailMenuSearch(speaceid=${cmap.speaceid},cookid=0,procesid=0,tasteid=0,hardid=0,styleid=0,homeid=0)}" th:title="${cmap.speaceid}" th:text="${cmap.speacename}"></a></li>
+      </ul>
+    </div>
+
+    <div class="block widget_archive">
+        <h3>菜品制作预估时常</h3>
+        <ul>
+          <li><a href="javascript:void(0)">   25分钟</a></li>
+        </ul>
+      </div>
+
+
+
+    <div class="block widget_tag_cloud">
+      <h3></h3>
+      <div class="tagcloud">
+        <a href="#" class="tag-link" style="width: 200px;text-align: center;">收藏</a>
+      </div>
+    </div>
+    
+  </aside>
+
+
+</div></div>
+</section>
+
+
+
+
+
+  <!--脚部继承-->
+  <div th:replace="fragments/footer :: footer"></div>
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+  <div class="preloaderimg"></div>
+</div>
+
+</body>
+</html>

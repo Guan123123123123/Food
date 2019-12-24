@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            //自定义验证规则
+            form.verify({
+                stylename: function(value){
+                    if(value.length < 1){
+                        return '菜系不能为空';
+                    }
+                }
+                , styleflag: function(value){
+                    if(value.length < 1){
+                        return '分类不能为空';
+                    }
+                }
+            });
+
+            //查询修改前身份角色id
+
+            //监听提交
+            form.on('submit(submitBtn)', function(data){
+                var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+                alert("监听提交"+JSON.stringify(param));//表格数据序列化 JSON.stringify(param)
+                $.ajax({
+                    url:"/cookstyle/cookstyleAdd",
+                    type:'post',//method请求方式，get或者post
+                    dataType:'json',//预期服务器返回的数据类型
+                    data:param,//表格数据序列化
+                    success:function(res){//res为相应体,function为回调函数
+                        if (res==1) {
+                            /* $.ajax({
+                                url:"UpdateNum.action?cls_id="+cls_id,
+                                type:'post',
+                                dataType:'json'
+                            }); */
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+        <input id="styleid" name="styleid"  type="text"   class="layui-input" style="display: none;" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜系</label>
+            <div class="layui-input-block">
+                <input type="text" name="stylename" lay-verify="stylename" autocomplete="off" placeholder="请输入(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类</label>
+            <div class="layui-input-block">
+                <input type="text" name="styleflag" lay-verify="styleflag" autocomplete="off" placeholder="请输入(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

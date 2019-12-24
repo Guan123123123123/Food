@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发表菜谱</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script src="/wangEditor-3.1.1/wangEditor.js"></script>
+    <script>
+        layui.use('upload', function(){
+            var $ = layui.jquery
+                ,upload = layui.upload;
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                ,url: '/spend/upload'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #ff254a;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            })});
+    </script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            var E = window.wangEditor;//建立wangEditor编辑器
+            var editor = new E('#articleContent');
+            editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+            editor.create();
+
+            layui.use(['form','layer'], function(){
+                var form = layui.form;
+                form.render('select');
+                //自定义验证规则
+                form.verify({
+                    dname: function(value){
+                        if(value.length < 1){
+                            return '名称不能为空';
+                        }
+                    }
+                    ,content: function(value){
+                        layedit.sync(editIndex);
+                    }
+                });
+                //查询修改前身份角色id
+
+                var articleContent = $("#articleContent").attr("data-articleContent");
+                editor.txt.html(articleContent);
+                //监听提交
+                form.on('submit(submitBtn)', function(data){
+                    var articleContent = editor.txt.html();
+                    saveInfo(data,articleContent);
+                    return false;
+                });
+
+            });
+
+        });
+        function saveInfo(data,articleContent){
+            alert("2111");
+            var param=$("#stuForm").serialize();
+            // var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+            console.log(param);
+            alert("1111")
+            $.ajax({
+                type: "POST",
+                data: {cookcontent: articleContent},
+                url: "/spend/saveInfo?"+param,
+                success: function (code) {
+                    if (code == "0") {
+                        layer.alert("操作成功",function(){
+                            layer.closeAll();
+                            window.location.reload();//刷新
+                        });
+                    } else {
+                        layer.alert(code);
+                        window.location.reload();//刷新
+                    }
+                },
+                error: function (code) {
+                    layer.alert("操作请求错误，请您稍后再试~");
+                }
+            });
+        }
+
+    </script>
+
+</head>
+<body>
+<div>
+
+    <form class="layui-form" id="stuForm" lay-filter="example">
+
+        <div class="layui-upload"  style="margin-left: 100px">
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1" style="width: 100px;height: 100px">
+                <p id="demoText"></p>
+            </div>
+            <button type="button" class="layui-btn" id="test1">菜谱封面</button>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜谱名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="cookid" class="layui-input" style="display: none;" />
+                <input type="text" name="cookname" lay-verify="cookname" autocomplete="off" placeholder="请输入菜谱名称(必选项)" style="width: 400px" required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">烹饪时间（大约几分钟）</label>
+            <div class="layui-input-block">
+                <input type="text" name="worktime" lay-verify="worktime" autocomplete="off" placeholder="请输入烹饪时间(必选项)"  style="width: 400px"  required class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">适合人数</label>
+            <div class="layui-input-block">
+                <input type="text" name="cooknumber" lay-verify="cooknumber" autocomplete="off" placeholder="请输入适合人数(必选项)"  style="width: 400px"  required class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" >选择工艺</label>
+            <div class="layui-input-inline" style="width: 300px">
+                <select name="procesid" lay-filter="procesid" lay-verify="required" >
+                    <option value="">请选择</option>
+                    <option th:each="result : ${proces}" th:value="${result.procesid}" th:text="${result.procesname}"></option>
+                </select>
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label">选择口味</label>
+            <div class="layui-input-inline" style="width: 300px">
+                <select name="tasteid" lay-filter="tasteid" lay-verify="required"  >
+                    <option value="" >请选择</option>
+                    <option th:each="result1 : ${teaste}" th:value="${result1.tasteid}" th:text="${result1.tastename}"></option>
+                </select>
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label">选择难度</label>
+            <div class="layui-input-inline" style="width: 300px">
+                <select name="hardid" lay-filter="hardid" lay-verify="required"  >
+                    <option value="" >请选择</option>
+                    <option th:each="result2 : ${hard}" th:value="${result2.hardid}" th:text="${result2.hardname}"></option>
+                </select>
+            </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" >选择菜系</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <select name="styleid" lay-filter="styleid" lay-verify="required" >
+                        <option value="">请选择</option>
+                        <option th:each="result3 : ${cookstyle}" th:value="${result3.styleid}" th:text="${result3.stylename}"></option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">选择家常菜谱</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <select name="homeid" lay-filter="homeid" lay-verify="required"  >
+                        <option value="" >请选择</option>
+                        <option th:each="result4 : ${homecook}" th:value="${result4.homeid}" th:text="${result4.homename}"></option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">选择地方小吃</label>
+                <div class="layui-input-inline" style="width: 300px">
+                    <select name="speaceid" lay-filter="speaceid" lay-verify="required"  >
+                        <option value="" >请选择</option>
+                        <option th:each="result5 : ${speacecook}" th:value="${result5.speaceid}" th:text="${result5.speacename}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">具体步骤：</label>
+            <div class="layui-input-block" style="z-index: 1;">
+                <div id="articleContent" style="width: 1200px"></div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+</body>
+</html>

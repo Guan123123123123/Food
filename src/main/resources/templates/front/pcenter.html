@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <title>个人中心</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--<base href="http://127.0.0.1:8080">-->
+    <link rel="stylesheet" href="/guan/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/guan/css/animations.css">
+    <link rel="stylesheet" href="/guan/css/main.css">
+    <script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+
+<div>
+    <a href="/skipPage/payVideo">支付模块</a>
+</div>
+
+</div><!-- EOF #box_wrap -->
+
+<!--脚部继承-->
+<div th:replace="fragments/footer :: footer"></div>
+<div id="gallery_container"></div>
+
+<div class="preloader">
+    <div class="preloaderimg"></div>
+</div>
+
+
+<script src="/guan/js/vendor/respond.min.js"></script>
+<script src="/guan/js/vendor/placeholdem.min.js"></script>
+<script src="/guan/js/vendor/jquery-1.10.2.min.js"></script>
+<script src="/guan/js/vendor/bootstrap.min.js"></script>
+<script src="/guan/js/vendor/hoverIntent.js"></script>
+<script src="/guan/js/vendor/superfish.js"></script>
+<script src="/guan/js/vendor/jquery.actual.min.js"></script>
+<script src="/guan/js/vendor/jquery.elastislide.js"></script>
+<script src="/guan/js/vendor/jquery.flexslider-min.js"></script>
+<script src="/guan/js/vendor/jquery.prettyPhoto.js"></script>
+<script src="/guan/js/vendor/jquery.easing.1.3.js"></script>
+<script src="/guan/js/vendor/jquery.ui.totop.js"></script>
+<script src="/guan/js/vendor/jquery.isotope.min.js"></script>
+<script src="/guan/js/vendor/jquery.easypiechart.min.js"></script>
+<script src='/guan/js/vendor/jflickrfeed.min.js'></script>
+<script src="/guan/js/vendor/jquery.sticky.js"></script>
+<script src='/guan/js/vendor/owl.carousel.min.js'></script>
+<script src='/guan/js/vendor/jquery.nicescroll.min.js'></script>
+<script src='/guan/js/vendor/jquery.fractionslider.min.js'></script>
+<script src='/guan/js/vendor/jquery.scrollTo-min.js'></script>
+<script src='/guan/js/vendor/jquery.localscroll-min.js'></script>
+<script src='/guan/js/vendor/jquery.parallax-1.1.3.js'></script>
+<script src='/guan/js/vendor/jquery.funnyText.min.js'></script>
+<script src='/guan/twitter/jquery.tweet.min.js'></script>
+<script src="/guan/js/plugins.js"></script>
+<script src="/guan/js/main.js"></script>
+
+
+
+</body>
+</html>

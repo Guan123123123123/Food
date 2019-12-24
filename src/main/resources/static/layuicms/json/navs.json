@@ -1,0 +1,128 @@
+{
+	"contentManagement": [
+		{
+			"title": "菜谱列表",
+			"icon": "icon-text",
+			"href": "/cookbook/show",
+			"spread": false
+		},
+		{
+			"title": "口味管理",
+			"icon": "&#xe634;",
+			"href": "/taste/show1",
+			"spread": false
+		},
+		{
+			"title": "工艺管理",
+			"icon": "&#xe634;",
+			"href": "/proces/show1",
+			"spread": false
+		},
+		{
+			"title": "难度管理",
+			"icon": "&#xe634;",
+			"href": "/hard/show",
+			"spread": false
+		},
+		{
+			"title": "菜谱类别",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "菜系类别管理",
+					"icon": "&#xe61c;",
+					"href": "/cookstyle/show",
+					"spread": false
+				},
+				{
+					"title": "家常菜谱管理",
+					"icon": "&#xe61c;",
+					"href": "/homecook/show",
+					"spread": false
+				},
+				{
+					"title": "各地小吃管理",
+					"icon": "&#xe609;",
+					"href": "/speacecook/show1",
+					"spread": false
+
+				}
+			]
+		}
+	],
+	"memberCenter": [
+		{
+			"title": "前台账号",
+			"icon": "&#xe612;",
+			"href": "/account/show",
+			"spread": false
+		},
+		{
+			"title": "后台账号",
+			"icon": "&#xe612;",
+			"href": "/users/show",
+			"spread": false
+		},
+		{
+			"title": "会员等级",
+			"icon": "icon-vip",
+			"href": "/vip/show1",
+			"spread": false
+		},
+		{
+			"title": "称号管理",
+			"icon": "icon-vip",
+			"href": "/levels/showLevels",
+			"spread": false
+		}
+	],
+	"systemeSttings": [
+		{
+			"title": "食材百科管理",
+			"icon": "&#xe631;",
+			"href": "/food/showfood",
+			"spread": false
+		},{
+			"title": "食材类别管理",
+			"icon": "icon-log",
+			"href": "/foodtype/ftshow",
+			"spread": false
+		},{
+			"title": "食材功效管理",
+			"icon": "&#xe64c;",
+			"href": "/funtion/show",
+			"spread": false
+		},	{
+			"title": "饮食健康",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "饮食文化列表",
+					"icon": "&#xe61c;",
+					"href": "/know/show",
+					"spread": false
+				},
+				{
+					"title": "文化类别管理",
+					"icon": "&#xe61c;",
+					"href": "/knowtype/show",
+					"spread": false
+				}
+			]
+		}
+	],
+	"seraphApi": [
+		{
+			"title": "菜谱视频管理",
+			"icon": "icon-mokuai",
+			"href": "/mv/show",
+			"spread": false
+		}
+	]
+}
+
+

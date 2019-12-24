@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>视频详情</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="/guan/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/guan/css/animations.css">
+    <link rel="stylesheet" href="/guan/css/main.css">
+    <script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<style>
+    .img1{
+        -webkit-touch-callout:default;
+    }
+</style>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+
+
+
+    <section id="middle" class="color_section">
+        <div class="container">
+
+
+
+            <div class="col-sm-12">
+                <h2 class="block-header"><strong class="grey">Delicious</strong> Food</h2>
+            </div>
+
+
+
+
+
+  <div class="col-sm-8" style="width: 100%;margin-top:10px;">
+    <div id="carousel-generic" class="carousel slide">
+     <!-- &lt;!&ndash; Wrapper for slides 图片轮播转  &ndash;&gt;-->
+      <div class="carousel-inner" th:title="${list.mvid}" >
+          <video class="video_back" th:src="${list.mvurl}" type="video/mp4" id="video1" loop="loop" style="width: 100%;"  height="700"  poster="/img/bg.jpg"   onclick="startVideo()"></video><!--muted autoplay="autoplay"  静音+自动播放  poster="/video/123.png"背景图-->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 block" style="width: 500px;">
+   <h4 class="grey" th:text="${list.mvcontent}"></h4>
+    <p class="skills" style="height: 40px;"><span>带给你:</span> 味蕾暴击 <SPAN style="display: inline-block;width: 20px"></SPAN>(点击视频框即可播放/暂停)
+        <input type="text"  th:value="${list.mvurl}" hidden="hidden" id="flagname">
+    </p>
+   <h4>详情做法:</h4> <h6 class="grey" th:text="${list.mvname}"></h6>
+   <a href="#" class="theme_btn" onclick="downloadIamge('video1')" style="position:relative;right:-1000px;top:-50px;">下载</a>
+  </div>
+
+
+</div></section>
+
+
+    <section id="belowcontent" class="color_section" style="margin-top: -20px;">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="block-header">最新发布</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!-- Horizontal Slider -->
+
+                    <div class="horizontal_slider_list_wrapper related-posts">
+                        <div id="horizontal_slider">
+                            <ul class="horizontal_slider_list" th:each="lis : ${list5}">
+
+                                <li>
+                                    <article class="post format-standard">
+                                        <header class="entry-header">
+                                            <div class="entry-thumbnail">
+                                                <img th:src="${lis.cookimg}"  class="post-image" alt="">
+                                            </div>
+                                        </header>
+                                        <!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <h4>
+                                                <a th:href="@{/front/blog-single(cookid=${lis.cookid})}"  rel="bookmark" th:text="${lis.cookname}"></a>
+                                            </h4>
+                                            <p th:text="${lis.cookcontent}"></p>
+                                        </div>
+
+                                    </article>
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--EOF Horizontal Slider -->
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+    <!--脚部继承-->
+    <div th:replace="fragments/footer :: footer"></div>
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+    <div class="preloaderimg"></div>
+</div>
+
+
+<!--视频播放js-->
+<script type="text/javascript">
+    function startVideo() {
+        var videL = document.getElementsByClassName("video_back")[0];
+        //alert(videL)
+        if (videL.paused) {//看当前的播放状态 返回布尔值，true代表未播放，false代表正在播放
+            //alert("开始")
+            videL.play();
+        } else {
+            // alert("暂停")
+            videL.pause();
+        }
+    }
+</script>
+<script type="text/javascript">
+    function downloadIamge(selector) {
+        //alert("selector====>"+selector)
+        var srctext = document.getElementById("flagname").value;
+        var newsrctext = srctext.replace("/mv/","")
+        //alert(newsrctext)
+        // 通过选择器获取img元素，
+        var vdo = document.getElementById(selector);
+        // 将图片的src属性作为URL地址
+        var url = vdo.src
+        var a = document.createElement('a')
+        a.download = newsrctext  // download属性规定被下载的超链接目标
+        a.href = url        //在 <a> 标签中必须设置 href 属性。 该属性也可以设置一个值来规定下载文件的名称。所允许的值没有限制，浏览器将自动检测正确的文件扩展名并添加到文件 (.img, .pdf, .txt, .html, 等等)
+        a.click()
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>登陆</title>
+    <meta name="description" content="particles.js is a lightweight JavaScript library for creating particles.">
+    <meta name="author" content="Vincent Garreau" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" href="/guan/loginStatic/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/guan/loginStatic/css/reset.css"/>
+</head>
+
+<link rel="stylesheet" href="/guan/css/bootstrap.min.css">
+<link rel="stylesheet" href="/guan/css/animations.css">
+<link rel="stylesheet" href="/guan/css/main.css">
+<script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+
+<body>
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+<div id="particles-js">
+   <form id="formlogin"  method="post" action="/front/login">
+    <div>
+    <div class="login">
+        <div class="login-top">
+            登录<br>
+          <span id="mmsg"  style="font-size: 30px;font-family: BarbaraHand;color: red;font-weight: bold;"></span>
+        </div>
+        <div class="login-center clearfix" >
+            <div class="login-center-img"><img src="/guan/loginStatic/img/name.png"/></div>
+            <div class="login-center-input">
+                <input type="text" id="userName" name="aname"  placeholder="请输入您的用户名" onfocus="fousChang(this)" onblur="this.placeholder='请输入您的用户名'" />
+                <div class="login-center-input-text">用户名</div>
+            </div>
+        </div>
+        <div class="login-center clearfix">
+            <div class="login-center-img"><img src="/guan/loginStatic/img/password.png"/></div>
+            <div class="login-center-input">
+                <input type="password"  id="password" name="apassword" placeholder="请输入您的密码" onfocus="fousChang(this)"  onblur="this.placeholder='请输入您的密码'"/>
+                <div class="login-center-input-text">密码</div>
+            </div>
+        </div>
+
+
+        <div class="login-center clearfix">
+            <div class="login-center-img"><img src="/guan/loginStatic/img/password.png"/></div>
+            <div class="login-center-input">
+                <input type="text" id="verifycode" name="verifycode"  placeholder="请输入验证码" onfocus="fousChang(this)"  onblur="this.placeholder='请输入您的密码'"/>
+                <div class="login-center-input-text">验证码</div>
+                <span id="discode" onclick="creatcode()" style="
+                margin-top: 5px;
+                font-family:Fixedsys;
+                font-size:20px ;
+                display: inline-block;
+                letter-spacing:8px;
+                text-align: center;
+                height: 32px;
+                line-height: 32px;
+                width: 120px;
+                font-weight: bold;
+                color: pink;
+                background-color: #234;
+                "></span>
+                <span onclick="creatcode()" style="margin-left: 20px;color: #2D93CA;" id="kbq">看不清</span>
+            </div>
+        </div>
+        <div class="login-button" id="loginBtn">
+                           登录
+        </div>
+        <div style="color: red"><span style="margin-left: 35px" th:text="${session.mmsg}"></span></div>
+    </div>
+    </div>
+    </form>
+    <div class="sk-rotating-plane"></div>
+</div>
+
+
+<!--脚部继承-->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- scripts -->
+<script src="/guan/loginStatic/js/particles.min.js"></script>
+<script src="/guan/loginStatic/js/app.js"></script>
+<script src="/layui/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    function hasClass(elem, cls) {
+        cls = cls || '';
+        if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
+        return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+    }
+
+    function addClass(ele, cls) {
+        if (!hasClass(ele, cls)) {
+            ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+        }
+    }
+
+    function removeClass(ele, cls) {
+        if (hasClass(ele, cls)) {
+            var newClass = ' ' + ele.className.replace(/[\t\r\n]/g, '') + ' ';
+            while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+                newClass = newClass.replace(' ' + cls + ' ', ' ');
+            }
+            ele.className = newClass.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
+    window.onload = function (ev) {
+        var name = document.getElementById("userName").value;
+        name.value="";
+        var pwd = document.getElementById("password").value;
+        pwd.value="";
+        var vfe = document.getElementById("verifycode").value;
+        vfe.value="";
+        document.getElementById("kbq").click();
+    }
+
+    var code; //在全局 定义验证码
+    //验证码
+    function creatcode() {
+        //创建验证码函数
+        code = "";
+        var codeLength = 4;//验证码的长度
+        var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+            'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');//所有候选组成验证码的字符，当然也可以用中文的
+        for (var i = 0; i < codeLength; i++) {
+            var charIndex = Math.floor(Math.random() * 36);
+            code += selectChar[charIndex];
+        }
+        // 设置验证码的显示样式，并显示
+        var dis = document.getElementById("discode");
+        dis.innerHTML=code;
+    }
+    document.querySelector(".login-button").onclick = function(){
+        var name = document.getElementById("userName").value;
+        var pwd = document.getElementById("password").value;
+        var vfe = document.getElementById("verifycode").value
+        var errorText = "";
+        if (name == ""){
+            errorText+="1"
+            $("#userName").css('color','#ff0000');
+            $("#userName").attr('placeholder','用户名不能为空');
+        } if (pwd == ""){
+            errorText+="1"
+            $("#password").css('color','#ff0000');
+            $("#password").attr('placeholder','密码不能为空');
+        }if (vfe == ""){
+            errorText+="1"
+            $("#verifycode").css('color','#ff0000');
+            $("#verifycode").attr('placeholder','验证码不能为空');
+        }if(vfe != "" && vfe != code){
+            errorText+="1"
+            $("#verifycode").css('color','#ff0000');
+            $("#verifycode").attr('placeholder','验证码不正确');
+        }if (errorText=="") {
+            $("#formlogin").submit();
+        }
+    }
+
+
+    function fousChang(obj){
+        $(obj).css('color','black');
+        this.placeholder='';
+    }
+</script>
+
+
+
+
+
+</body>
+</html>

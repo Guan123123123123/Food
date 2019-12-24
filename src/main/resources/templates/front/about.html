@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+
+        <title>热门视频</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+
+
+
+
+
+
+<section id="middle" class="color_section" style="background-image: url('/guan/img/1111.jpg'); background-repeat: no-repeat; background-size: cover;";>
+  <div class="container">
+    <div class="row" >
+      <div class="col-sm-12 text-center">
+          <br>
+             <h2> 美食<em>  @  </em>一刻</h2>
+         <br>
+      </div>
+    </div>
+
+
+      <div class="row text-center to_fade">
+
+
+     <span th:each=" l : ${list}">
+       <div class="col-sm-4" th:title="${l.mvid}" onclick="mvClick(this)" style="margin-bottom: 50px;">
+        <div class="thumbnail" style="background-color:#1a1a1a;border-radius: 10px;">
+            <video class="video_back" th:src="${l.mvurl}" type="video/mp4"  loop="loop" width="300" height="200"   muted autoplay="autoplay"></video><!--muted autoplay="autoplay"  静音+自动播放  poster="/video/123.png"背景图-->
+          <div class="caption">
+              <div class="block widget_tag_cloud">
+                  <div class="tagcloud">
+                      <a href="#" class="tag-link" style="width: 200px;text-align: center;" th:text="${l.mvcontent}"></a>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </span>
+
+
+
+
+      </div>
+
+
+  </div>
+</section>
+
+
+
+
+<!--脚部继承-->
+<div th:replace="fragments/footer :: footer"></div>
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+  <div class="preloaderimg"></div>
+</div>
+
+    <script src="static/layui/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" >
+        function  mvClick(obj){
+          var t = obj.title;
+          var address = "/front/gallery-single?mvid="+t;
+          window.location.href=address;
+        }
+    </script>
+
+</body>
+</html>

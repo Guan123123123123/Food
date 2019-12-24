@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jquery删除添加输入文本框</title><base target="_blank" />
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="http://hovertree.com/texiao/jquery/67/css/tip.css" />
+    <style>.hovertreeinfo{clear:both;text-align:center;}.hovertreeinfo a{color:blue}.hovertreebd{display:inline-block;width:336px;height:280px;}</style>
+</head>
+<body>
+<div class="site">
+    <div class="title">标签：</div>
+    <div class="tip">
+        <div class="tip-container"><span class="jia"></span>添加标签</div>
+    </div>
+</div>
+<div class="hovertreeinfo">
+    <input type="button" value="获取全部值" id="hovertreeall" />
+    <br />
+    <span id="hovertreeresult"></span>
+    <br />
+
+</div>
+<script type="text/javascript" src="/layui/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/guan/js/Tip.js"></script>
+<script>
+    $("#hovertreeall").on("click", function () {
+        $("#hovertreeresult").html("<br />");
+        $(":input.house-tip").each(
+            function () {
+// alert($(this).val());
+                $("#hovertreeresult").append($(this).val()+"<br />");
+            }
+        )
+    })
+</script>
+</body>
+</html>

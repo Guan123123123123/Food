@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        
+        <title>食品百科</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/guan/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/guan/css/animations.css">
+        <link rel="stylesheet" href="/guan/css/main.css">
+        <script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+
+
+        <!--头-->
+        <div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+
+<div style="width: 100%;height: 50px;background-color: yellow;">
+  搜索框位置
+</div>
+
+<section id="abovecontent" class="color_section with-top-border" style="background-image: url('/guan/img/bgbk.jpg');background-size:contain;background-repeat: repeat-y; ">
+  <div class="container" th:each=" lis : ${list}">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 th:text="${lis.foodname}"></h3>
+      </div>
+    </div>
+
+    <div class="row" >
+      <div class="col-sm-9">
+      
+        <div class="tab-content" >
+
+          <div  class="tab-pane fade active in">
+            <p class="pull-left">
+              <img th:src="${lis.foodimg}" th:title="${lis.foodname}" style="border: 1px solid yellow;">
+            </p>
+            <p>
+              <span style="margin-right: 10px;">别名：</span>
+              <span style="margin-right: 20px;" th:text="${lis.foodnametwo}"></span>
+              <span style="margin-right: 10px;">剂量：</span>
+              <span style="margin-right: 20px;" th:text="${lis.foodnametwo}">advice</span>
+            </p>
+
+            <p>
+              <span style="margin-right: 10px;">适用人群：</span>
+              <span style="margin-right: 20px;" th:text="${lis.okpeople}"></span>
+            </p>
+            <p>
+              <span style="margin-right: 10px;">功效：</span>
+              <span style="margin-right: 20px;" th:text="${lis.onpeople}"></span>
+            </p>
+            <span class="author vcard">
+                <a rel="author" href="javascript:void(0)" class="url fn n" style="background-color:#ff0000;display: inline-block;width: 100px;height: 30px;text-align:center;line-height:30px;border-radius:15px;">相关菜谱</a>
+            </span>
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+<!--脚部继承-->
+<div th:replace="fragments/footer :: footer"></div>
+
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+  <div class="preloaderimg"></div>
+</div>
+
+
+</body>
+</html>

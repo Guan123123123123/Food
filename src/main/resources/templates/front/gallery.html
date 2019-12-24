@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>菜谱筛查</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+    <!--条件筛选框样式-->
+    <link type="text/css" href="/guan/searchStatic/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<div id="box_wrap">
+    <span th:each="m1 : ${map1}">
+        <input type="text" th:title="${m1.key}" th:value="${m1.value}" hidden="hidden" id="markCss">
+    </span>
+
+    <section id="portfolio" class="color_section">
+        <div class="container">
+            <div id="portfolio_wrapper" class="row"  style="position:relative;top:-120px;">
+                <!--条件筛选框#c4284d-->
+                <div>
+                    <div id="box" style="width: 100%;" onclick="clickBigDiv()">
+                        <dl id="foodsearch1">
+                            <dt>工艺：</dt>
+                            <div th:each="lis : ${list1}" >
+                                <dd onclick="searchbox(this,1)"  th:title="${lis.procesid}" th:value="${lis.procesname}" th:text="${lis.procesname}"></dd>
+                            </div>
+                        </dl>
+                        <dl  id="foodsearch2" style="height: 50px;">
+                            <dt>口味：</dt>
+                            <div th:each="lis : ${list2}">
+                                <dd onclick="searchbox(this,2)"  th:title="${lis.tasteid}" th:value="${lis.tastename}" th:text="${lis.tastename}"></dd>
+                            </div>
+                        </dl>
+                        <dl  id="foodsearch3" style="height: 30px;">
+                            <dt>难度：</dt>
+                            <div th:each="lis : ${list3}" >
+                                <dd onclick="searchbox(this,3)"  th:title="${lis.hardid}" th:value="${lis.hardname}" th:text="${lis.hardname}"></dd>
+                            </div>
+                        </dl>
+                        <dl  id="foodsearch4" style="height: 50px;" >
+                            <dt>菜系：</dt>
+                            <div th:each="lis : ${list4}">
+                                <dd  onclick="searchbox(this,4)"  th:title="${lis.styleid}" th:value="${lis.stylename}" th:text="${lis.stylename}"></dd>
+                            </div>
+                        </dl>
+                        <dl  id="foodsearch5" style="height: 40px;" >
+                            <dt>家常菜：</dt>
+                            <div th:each="lis : ${list5}">
+                                <dd onclick="searchbox(this,5)"   th:title="${lis.homeid}"  th:value="${lis.homename}" th:text="${lis.homename}"></dd>
+                            </div>
+                        </dl>
+                        <dl  id="foodsearch6" style="border: none;" >
+                            <dt>地方菜：</dt>
+                            <div th:each="lis : ${list6}">
+                                <dd onclick="searchbox(this,6)"  th:title="${lis.speaceid}" th:value="${lis.speacename}" th:text="${lis.speacename}"></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <span onclick="location.href='/front/detailMenuSearch?cookid=0&speaceid=0&tasteid=0&hardid=0&styleid=0&homeid=0&procesid=0'">「查看全部」</span><br/>
+               <!-- 菜谱明细-->
+                <ul class="items-row row cols-3 portfolio filtrable clearfix isotope" id="portfolioContainer">
+                    <li class="item col-sm-6 col-md-4 isotope-item graphicdesign webdesign" th:each="lis : ${list7}">
+                        <div class="portfolio_item_image">
+                            <img alt=""  th:src="${lis.cookimg}">
+                            <div class="portfolio_links">
+                                <a class="p-view prettyPhoto" title="" rel="prettyPhoto[pp_gal]" th:href="@{/front/blog-single(cookid=${lis.cookid})}"></a>
+                                <a class="p-link" title="" th:href="@{/front/blog-single(cookid=${lis.cookid})}"></a><!--传当前菜谱id过去-->
+                            </div>
+                        </div>
+                        <div class="item_title">
+                            <h4>
+                                <a th:href="@{/front/blog-single(cookid=${lis.cookid})}" th:text="${lis.cookname}"></a>
+                                <span class="heart">收藏</span>
+                            </h4>
+                            <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:1;overflow: hidden;" th:text="${lis.cookcontent}"></p>
+                        </div>
+                    </li>
+
+
+
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!--脚部继承-->
+    <div th:replace="fragments/footer :: footer"></div>
+
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+    <div class="preloaderimg"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    //通用函数
+    function foodHelper(foodDiv) {
+        var ff =  document.getElementById(foodDiv).getElementsByTagName("div");
+        for (var i=0;i<ff.length;i++){
+            if ($(ff[i].getElementsByTagName("dd")[0]).hasClass("active")){
+                return ff[i].getElementsByTagName("dd")[0].title;
+            }
+        }
+    }
+
+    /*点击大div触发*/
+    function clickBigDiv() {
+        var rs1 = foodHelper("foodsearch1");
+        var rs2 = foodHelper("foodsearch2");
+        var rs3 = foodHelper("foodsearch3");
+        var rs4 = foodHelper("foodsearch4");
+        var rs5 = foodHelper("foodsearch5");
+        var rs6 = foodHelper("foodsearch6");
+
+      // alert("工艺procesid"+rs1+"-口味tasteid"+rs2+"-难度hardid"+rs3+"-菜系styleid"+rs4+"-家常菜homeid"+rs5+"-地方菜speaceid"+rs6)
+        $.ajax({
+            url:"/front/detailMenuSearchJson",
+            dataType:"json",
+            type:"POST",
+            data:{"cookid":0,"speaceid":rs6,"procesid":rs1,"tasteid":rs2,"hardid":rs3,"styleid":rs4,"homeid":rs5},
+            success:function (data) {
+                var rscon =  document.getElementById("portfolioContainer");
+                rscon.innerHTML="";
+                var marktext="";
+                for (var i=0;i<data.length;i++){
+                   marktext+= " <li class=\"item col-sm-6 col-md-4 isotope-item photography webdesign\"> \n" +
+                        "          \n" +
+                        "          \n" +
+                        "          \n" +
+                        "          <div class=\"portfolio_item_image\">\n" +
+                        "            <img alt=\"\" src=\""+data[i].cookimg+"\">\n" +
+                        "            <div class=\"portfolio_links\">  \n" +
+                        "              <a class=\"p-view prettyPhoto\" title=\"\" rel=\"prettyPhoto[pp_gal]\" href=\""+data[i].cookimg+"\"></a>\n" +
+                        "              <a class=\"p-link\" title=\"\" href=\"/front/blog-single?cookid="+data[i].cookid+"\"></a>\n" +
+                        "            </div>\n" +
+                        "          </div>\n" +
+                        "          <div class=\"item_title\">\n" +
+                        "            <h4>\n" +
+                        "              <a href=\"/front/blog-single?cookid="+data[i].cookid+"\">"+data[i].cookname+"</a>\n" +
+                        "              <span class=\"heart\">19</span>\n" +
+                        "            </h4>\n" +
+                        "            <p style=\"display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp:1;overflow: hidden;\">"+data[i].cookcontent+"</p>\n" +
+                        "          </div>\n" +
+                        "        </li> ";
+                }
+                rscon.innerHTML=marktext;
+            }
+        })
+    }
+    //加载判断 给初始样式
+    window.onload = function() {
+        var markCss =  document.getElementById("markCss");
+       if (markCss.title!=undefined) {
+           var foodDiv = markCss.title
+           var ff =  document.getElementById(foodDiv).getElementsByTagName("div");
+           for (var i=0;i<ff.length;i++){
+              if (ff[i].getElementsByTagName("dd")[0].title == markCss.value){
+                   $(ff[i].getElementsByTagName("dd")[0]).addClass("active")
+               }
+           }
+       }
+    }
+
+    //obj当前节点
+    function searchbox(obj,num){
+        var allChildren = obj.parentNode.parentNode.getElementsByTagName("div");
+
+        //判断存在不在这个样式
+        if (!$(obj).hasClass("active")){
+            for (var i=0;i<allChildren.length;i++){
+                if ($(allChildren[i].getElementsByTagName("dd")[0]).hasClass("active")){
+                    //移除class属性
+                    allChildren[i].getElementsByTagName("dd")[0].classList.remove("active");
+                }
+            }
+            //jquery添加class属性
+            $(obj).addClass("active");
+        }
+       else{
+             //jquery移除class属性
+            $(obj).removeClass("active");
+        }
+
+
+    }
+
+</script>
+
+</body>
+</html>

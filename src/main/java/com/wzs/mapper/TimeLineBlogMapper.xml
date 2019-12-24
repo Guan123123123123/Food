@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzs.dao.TimeLineBlogMapper">
+  <resultMap id="BaseResultMap" type="com.wzs.entity.TimeLineBlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="time_line_content" jdbcType="VARCHAR" property="timeLineContent" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+        a.id AS "id",
+        a.past_time AS "pastTime",
+        a.time_line_content AS "timeLineContent",
+        a.create_by AS "createBy",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy",
+        a.update_date AS "updateDate",
+        a.del_flag AS "delFlag"
+	</sql>
+
+  <select id="getTimeLineBlogList" resultType="com.wzs.entity.TimeLineBlog">
+    SELECT
+    <include refid="Base_Column_List" />,
+    (select b.username from user b where b.id = updateBy) as "username"
+    FROM time_line_blog a
+    <where>
+      a.del_flag = "0"
+      <if test="id != null and id != ''">
+        AND a.id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        AND
+        DATE_FORMAT(a.past_time, '%Y-%m-%d') &gt; #{beginTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        AND
+        DATE_FORMAT(a.past_time, '%Y-%m-%d') &lt;= #{endTime}
+      </if>
+    </where>
+  </select>
+
+    <select id="getYearList" resultType="java.util.Map">
+        SELECT
+            DISTINCT DATE_FORMAT(past_time, '%Y') AS 'year'
+        FROM time_line_blog
+        WHERE
+              del_flag = "0"
+    </select>
+
+    <select id="getTimeLineListByYear" resultType="com.wzs.entity.TimeLineBlog">
+        SELECT
+            DATE_FORMAT(a.past_time, '%m月%d日') AS "pastTime",
+            a.time_line_content AS "timeLineContent"
+        FROM time_line_blog a
+        WHERE
+            a.del_flag = "0"
+            AND
+            DATE_FORMAT(a.past_time, '%Y') = #{year}
+        ORDER BY a.past_time DESC
+
+    </select>
+
+</mapper>

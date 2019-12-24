@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户显示</title>
+</head>
+
+<script type="text/javascript" src="/layui/layui.js" ></script>
+<script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+<link rel="stylesheet" href="/layui/css/layui.css">
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({   //加载数据方法
+            elem: '#empInfo' //表格的id值
+            ,id: 'empInfoReload'     //模糊查询
+            ,height: 450
+            ,url:'/account/accountShow'
+            ,cellMinWidth: 80   //定义全局最小宽度
+            ,toolbar: '#toolbarDemo'  //绑定工具栏 头部按钮
+            ,cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}
+                    ,{field:'aid', width:80, title: 'ID',align: 'center',fixed:'left',sort: true}
+                    ,{field:'aname',  title: '账号',align: 'center'}
+                    ,{field:'apassword',  title: '密码',align: 'center'}
+                    ,{field:'aimg',  title: '头像',align: 'center'}
+                    ,{field:'aphone',  title: '手机号',align: 'center'}
+                    ,{field:'accountstate',  title: '状态',align: 'center'}
+                    ,{field:'accountdian',  title: '经验',align: 'center'}
+                    ,{field:'vipid',  title: 'vip',align: 'center'}
+                    ,{field:'levelsid',  title: '称号',align: 'center'}
+                    ,{field:'fensi',  title: '粉丝',align: 'center'}
+                    ,{field:'atime',  title: '打卡时间',align: 'center'}
+                    ,{field:'beginTime',  title: 'VIP开始时间',align: 'center'}
+                    ,{field:'endTime',  title: 'VIP结束时间',align: 'center'}
+                    ,{fixed: 'right', title:'操作', width:200 , align:'center', toolbar: '#barDemo'}
+                ]
+            ]
+            ,dataType:"json"
+            ,page: true//开启分页
+            ,limit:10 //一页显示多少条
+            ,limits:[5,10,15,20,25]//每页条数的选择项
+            ,groups: 2 //只显示 2 个连续页码
+            ,first: "首页" //不显示首页
+            ,last: "尾页" //不显示尾页
+        });
+
+        //表格重载
+        var $ = layui.$, active = {
+            reload: function(){
+                //获取模糊查询框中的值
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('empInfoReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+
+                        name : demoReload.val()
+
+                    }
+                });
+            }
+        };
+        $('#searchBtn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //头工具栏事件
+        table.on('toolbar(emp)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'addEmp':
+                    layer.open({
+                        title:'添加'
+                        ,id:'add'
+                        ,type: 2
+                        ,content: '/account/add'
+                        ,offset:'10px'//居上100左右居中
+                        ,resize:false//不可改变大小
+                        ,fixed: false//鼠标滚动时，固定在可视区域
+                        ,btn: '关闭'
+                        ,btnAlign: 'c' //按钮居中
+                        ,shade: 0.3 //遮罩
+                        ,area:['600px','530px']
+                    });
+                    break;
+            /*    case 'batchStu':
+                    var checks=table.checkStatus('empInfoReload');
+                    if(checks.data.length==0){
+                        layer.msg('请先选择要删除的数据行！');
+                        return ;
+                    }
+                    var stu_ids = [];
+                    var count=0;
+                    for(var i=0;i<checks.data.length;i++){
+                        if (count<i) {
+                            stu_ids+=",";
+                        }
+                        stu_ids += checks.data[i].empId;
+                    }
+                    var cls_ids = [];
+                    var counts=0;
+                    for(var i=0;i<checks.data.length;i++){
+                        if (counts<i) {
+                            cls_ids+=",";
+                        }
+                        cls_ids += checks.data[i].cls.cls_id;
+                    }
+                    layer.confirm('选定多行数据，确定删除吗', function(index){
+                        layer.close(index);
+                        $.ajax({
+                            type:'post',
+                            url:'Bg_EmpServlet?op=emp_batchdelete',
+                            dataType:'json',
+                            data:{empids:stu_ids},
+                            success:function(res){
+                                if(res==1){
+                                    layer.msg('删除成功');
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    });
+                    break;*/
+            };
+        });
+        //监听行工具事件
+        table.on('tool(emp)', function(obj){
+            var data = obj.data;
+            if(obj.event == 'del'){
+                layer.confirm('真的要删除么？', function(index){
+                    //obj.del();
+                    layer.close(index);
+                    $.ajax({
+                        type:'post',
+                        url:'/account/accountDelete',
+                        dataType:'json',
+                        data:{aid:data.aid},
+                        success:function(res){
+                            if(res==1){
+                                layer.msg('删除成功');
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            } else if(obj.event == 'update'){
+                layer.open({
+                    title:'修改信息'
+                    ,id:'upd'
+                    ,type: 2
+                    ,content: '/account/update?aid='+data.aid
+                    ,offset:'10px'//居上100左右居中
+                    ,resize:false//不可改变大小
+                    ,fixed: false//鼠标滚动时，固定在可视区域
+                    ,btn: '关闭'
+                    ,btnAlign: 'c' //按钮居中
+                    ,shade: 0.3 //遮罩
+                    ,area:['600px','530px']
+                });
+            }  else if (obj.event == 'givePunish'){
+                layer.open({
+                    title:'提交处分'
+                    ,id:'Punish'
+                    ,type: 2
+                    ,content: 'punishStu.action?stu_id='+data.stu_id+'&stu_name='+data.stu_name
+                    ,offset:'10px'//居上100左右居中
+                    ,resize:false//不可改变大小
+                    ,fixed: false//鼠标滚动时，固定在可视区域
+                    ,btn: '关闭'
+                    ,btnAlign: 'c' //按钮居中
+                    ,shade: 0.3 //遮罩
+                    ,area:['500px','400px']
+                });
+            }
+        });
+
+    });
+    //格式转换
+    function createrFormat(o){
+        return o;
+    }
+</script>
+<body>
+<div class="demoTable" style="margin-top: 15px;margin-left: 20px;" >
+    搜索员工姓名：
+    <div class="layui-inline">
+        <input class="layui-input" name="name" id="demoReload" autocomplete="off">
+    </div>
+
+    <button  class="layui-btn" id="searchBtn" data-type="reload">搜索</button>
+</div>
+<!-- 学生信息数据表格 -->
+<table class="layui-hide" lay-filter="emp" id="empInfo"></table>
+<!-- 行按钮组件 -->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+
+</script>
+<!-- 头部按钮组件 -->
+<script type="text/html" id="toolbarDemo" >
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addEmp">添加员工</button>
+    </div>
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            //自定义验证规则
+            form.verify({
+                name: function(value){
+                    if(value.length < 1){
+                        return '名字不能为空';
+                    }
+                }
+                , tall: function(value){
+                    if(value.length < 1){
+                        return '身高不能为空';
+                    }
+                }
+                , weight: function(value){
+                    if(value.length < 1){
+                        return '体重不能为空';
+                    }
+                }, aaid: function(value){
+                    if(value.length < 1){
+                        return '部门不能为空';
+                    }
+                }
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //查询修改前身份角色id
+
+            //监听提交
+            form.on('submit(submitBtn)', function(data){
+                var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+                alert("监听提交"+JSON.stringify(param));//表格数据序列化 JSON.stringify(param)
+                $.ajax({
+                    url:"/bc/Badd",
+                    type:'post',//method请求方式，get或者post
+                    dataType:'json',//预期服务器返回的数据类型
+                    data:param,//表格数据序列化
+                    success:function(res){//res为相应体,function为回调函数
+                        if (res==1) {
+                            /* $.ajax({
+                                url:"UpdateNum.action?cls_id="+cls_id,
+                                type:'post',
+                                dataType:'json'
+                            }); */
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+        <input id="aid" name="aid"  type="text"   class="layui-input" style="display: none;" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="aname" lay-verify="aname" autocomplete="off" placeholder="请输入账号(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="apassword" lay-verify="apassword" autocomplete="off" placeholder="请输入密码(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-block">
+                <input type="text" name="aimg" lay-verify="aimg" autocomplete="off" placeholder="请输入头像(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="aphone" lay-verify="aphone" autocomplete="off" placeholder="请输入手机号(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="text" name="accountstate" lay-verify="accountstate" autocomplete="off" placeholder="请输入状态(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">经验</label>
+            <div class="layui-input-block">
+                <input type="text" name="accountdian" lay-verify="accountdian" autocomplete="off" placeholder="请输入经验(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">vip</label>
+            <div class="layui-input-block">
+                <input type="text" name="vipid" lay-verify="vipid" autocomplete="off" placeholder="请输入vip(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">称号id</label>
+            <div class="layui-input-block">
+                <input type="text" name="levelsid" lay-verify="levelsid" autocomplete="off" placeholder="请输入称号id(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">粉丝</label>
+            <div class="layui-input-block">
+                <input type="text" name="fensi" lay-verify="fensi" autocomplete="off" placeholder="请输入粉丝(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">打卡时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="atime" lay-verify="atime" autocomplete="off" placeholder="请输入打卡时间(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">VIP开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="beginTime" lay-verify="beginTime" autocomplete="off" placeholder="请输入VIP开始时间(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">VIP结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="endTime" lay-verify="endTime" autocomplete="off" placeholder="请输入VIP结束时间(必选项)" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

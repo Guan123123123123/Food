@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" >
+    <script type="text/javascript" src="/layui/layui.js" ></script>
+    <script type="text/javascript" src="/layui/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript">
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birthday'
+                ,theme: 'molv'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            var form = layui.form;
+            form.render('select');
+            //自定义验证规则
+            form.verify({
+                cookid: function(value){
+                    if(value.length < 1){
+                        return '菜谱不能为空';
+                    }
+                }
+                , content: function(value){
+                    if(value.length < 1){
+                        return '回复内容不能为空';
+                    }
+                }
+                , aid: function(value){
+                    if(value.length < 1){
+                        return '账号id不能为空';
+                    }
+                }
+                , rvtime: function(value){
+                    if(value.length < 1){
+                        return '回复时间不能为空';
+                    }
+                }
+                , pid: function(value){
+                    if(value.length < 1){
+                        return '父id不能为空';
+                    }
+                }
+                ,oauthAvatar: function(value){
+                    if(value.length < 1){
+                        return '头像路径不能为空';
+                    }
+                }
+            });
+
+            //监听提交
+            form.on('submit(submitBtn)', function(data){
+                var param=data.field;//定义临时变量获取表单提交过来的数据，非json格式
+                //alert("监听提交"+JSON.stringify(param));//表格数据序列化 JSON.stringify(param)
+                $.ajax({
+                    url:"/review/reviewUpdate",
+                    type:'post',//method请求方式，get或者post
+                    dataType:'json',//预期服务器返回的数据类型
+                    data:param,//表格数据序列化
+                    success:function(res){//res为相应体,function为回调函数
+                        if (res==1) {
+                            layer.msg('操作成功');
+                            window.parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div style="margin-top: 10px;" >
+    <form class="layui-form" id="stuForm" lay-filter="example" >
+        <input id="rid"  type="text" name="rid" th:value="${one.rid}"   class="layui-input" style="display: none;" />
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜谱</label>
+            <div class="layui-input-block">
+                <input id="cookid" type="text" style="width: 400px;" name="cookid" th:value="${one.cookid}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">回复内容</label>
+            <div class="layui-input-block">
+                <input id="content" type="text" style="width: 400px;" name="content" th:value="${one.content}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input id="aid" type="text" style="width: 400px;" name="aid" th:value="${one.aid}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">回复时间</label>
+            <div class="layui-input-block">
+                <input id="rvtime" type="text" style="width: 400px;" name="rvtime" th:value="${one.rvtime}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">父id</label>
+            <div class="layui-input-block">
+                <input id="pid" type="text" style="width: 400px;" name="pid" th:value="${one.pid}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像路径</label>
+            <div class="layui-input-block">
+                <input id="oauthAvatar" type="text" style="width: 400px;" name="oauthAvatar" th:value="${one.oauthAvatar}" lay-verify="name" autocomplete="off" required class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitBtn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<body>
+<header th:fragment="header">
+<link rel="stylesheet"  href="/guan/css/bootstrap.min.css">
+<link rel="stylesheet"  href="/guan/css/animations.css">
+<link rel="stylesheet"  href="/guan/css/main.css">
+<script src="/guan/js/vendor/modernizr-2.6.2.min.js"></script>
+<!--明细菜单-->
+<style type="text/css">
+    #waijia * {
+        margin:0;
+        padding:0;
+    }
+    #waijia body {
+        font-family:'microsoft yahei';
+        overflow:hidden;
+        background:#fff;
+    }
+    #waijia  .w {
+        width:1200px;
+        margin:0 auto;
+    }
+    #waijia  a {
+        text-decoration:inherit;
+    }
+    #waijia  a,li {
+        list-style:none;
+    }
+    #waijia   .cf:before,.cf:after,.clearfix:before,.clearfix:after {
+        content:"";
+        display:table;
+    }
+    #waijia   .cf:after,.clearfix:after {
+        clear:both;
+    }
+    #waijia  .cf,.clearfix {
+        clear:both;
+        *zoom:1;
+    }
+    /*导航条*/
+    #waijia  #nav {
+        width:100%;
+        min-width:1200px;
+        height:30px;
+        background:#00a1ea;
+        margin-top:100px;
+    }
+    #waijia  #nav ul li {
+        float:left;
+    }
+    #waijia  #nav ul li:first-child {
+        margin-left:17%;
+    }
+    #waijia   #nav ul li a {
+        font-size:16px;
+        color:#fff;
+        line-height:30px;
+        padding:0 35px;
+        display:inline-block;
+    }
+    #waijia    #nav ul li a:hover {
+        background:#fff000;
+        color:#00a1ea;
+    }
+    #waijia   #nav ul li.active a {
+        background:#fff000;
+        color:#00a1ea;
+    }
+    /*banner上面浮层*/
+    #waijia  .cat_wrap {
+        box-shadow:1px 1px 2px #bfbcbc;
+        box-shadow:0 -4px 8px 0 rgba(7,17,27,.1),0 4px 8px 0 rgba(7,17,27,.1);
+        background:#fff;
+        width:180px;
+        position:absolute;
+        z-index:999;
+        top:-30px;
+    }
+    #waijia  .cat_wrap .cat_title {
+        width:192px;
+        height:50px;
+        line-height:50px;
+        font-size:16px;
+        margin-left:-6px;
+        margin-top:-15px;
+        background-size:100%;
+        color:#fff;
+        text-align:center;
+    }
+    #waijia .cat_wrap .cat_header {
+        min-height:450px;
+    }
+    #waijia  .cat_wrap .cat_list div {
+        background:#fff;
+        border-left:3px solid transparent;
+    }
+    #waijia  .cat_wrap .cat_list div li {
+        float:left;
+        color:#323232;
+        font-size:14px;
+        margin:7px 0px;
+    }
+    #waijia  .cat_wrap .cat_list div li:first-child {
+        margin-left:15px;
+        margin-right:10px;
+    }
+    #waijia  .cat_wrap .cat_list {
+        cursor:pointer;
+    }
+    #waijia  .cat_wrap .cat_list div.active {
+        width:177px;
+        padding-left:1px;
+        position:relative;
+        z-index:999;
+        border-left:3px solid #00a1ea;
+        border-top:1px solid #00a1ea;
+        border-bottom:1px solid #00a1ea;
+        border-right:none;
+    }
+    /*banner浮层滑动显示弹框*/
+    #waijia  .cat_subcont {
+        display:none;
+    }
+    #waijia  .cat_subcont.active {
+        display:block;
+    }
+    #waijia  .cat_subcont .cat_sublist {
+        position:absolute;
+        z-index:998;
+        top:30px;
+        left:180px;
+        padding-top:5px;
+        min-height:394px;
+        width:740px;
+        background:#fff;
+        border-top:1px solid #f9f9f9;
+        border-left:1px solid #00a1ea;
+        border-bottom:1px solid #00a1ea;
+        border-right:1px solid #00a1ea;
+    }
+    #waijia  .cat_subcont .cat_sublist .fore1 {
+        width:740px;
+    }
+    #waijia    .cat_subcont .cat_sublist .fore1 .fore_list {
+        padding:0 20px;
+    }
+    #waijia   .cat_subcont .cat_sublist .fore1 .fore_list h3 {
+        padding:5px;
+        border-bottom:1px solid #d3d3d3;
+    }
+    #waijia   .cat_subcont .cat_sublist .fore1 .fore_list h3 a {
+        font-size:14px;
+        color:#00a1ea;
+    }
+    #waijia  .cat_subcont .cat_sublist .fore1 .fore_list li {
+        float:left;
+        padding:5px;
+    }
+    #waijia   .cat_subcont .cat_sublist .fore1 .fore_list li a {
+        font-size:12px;
+        color:#333;
+    }
+    #waijia  .cat_subcont .cat_sublist .fore1 .fore_list li a:hover {
+        color:#00a1ea;
+        text-decoration:underline;
+    }
+
+</style>
+
+    <!--头上菜单-->
+    <section id="header" class="dark_section">
+        <div class="container"><div class="row">
+            <!--href="/skipPage/indexFood"-->
+            <a class="navbar-brand" id="touchThis" ><img src="/guan/example/logo.png" alt="" title="明细菜单"></a>
+
+            <div class="col-sm-12 mainmenu_wrap"><div class="main-menu-icon visible-xs"><span></span><span></span><span></span></div>
+                <ul id="mainmenu" class="nav menu sf-menu responsive-menu superfish">
+                    <li class="active">
+                        <a href="/front/indexFood">首页</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" id="foodcx">国际菜系</a>
+                        <ul class="nav dropdown-menu">
+                            <div id="foodtbodycx"></div><!--接收动态加载的5个外国菜类型-->
+                            <li class="">
+                                <a href="javascript:void(0)" onclick="location.href='/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid=0'" >全部</a><!--全部类型对应的菜谱展示-->
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="/front/services">饮食百科</a>
+                       <!-- <ul class="nav dropdown-menu">
+                            <li class="">
+                                <a href="/skipPage/blog">食品健康</a>
+                            </li>
+                            <li class="">
+                                <a href="/skipPage/blog-single">人群膳食</a>
+                            </li>
+                        </ul>-->
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)">视频教程</a>
+                        <ul class="nav dropdown-menu">
+                            <li class="">
+                                <a href="/front/about?newid=1">最新视频</a>
+                            </li>
+                            <li class="">
+                                <a href="/front/about?newid=2">全部视频</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="/skipPage/contact">联系我们</a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div></div>
+        <!--登陆注册部分-->
+        <div style="width:80px;height:60px;display: inline-block;position: absolute;right: 50px;top:15px;"id="imglogin">
+            <span th:switch="${session.flagSwitch}">
+               <span th:case="'成功'">
+                    <img th:src="${session.u.aimg}" width="40" height="40" style="display: inline-block;border-radius: 50%;border: 1px solid yellow;" />
+               <ul class="nav dropdown-menu" id="personShow" style="display: none; position: absolute; left:-40px; top:45px;border: 1px solid black;" >
+                <li class="">
+                    <a href="/skipPage/pcenter">个人中心</a>
+                </li>
+                <li class="">
+                    <a href="/front/indexFood?flag=1">退出</a>
+                </li>
+                </ul>
+                </span>
+
+
+                <span th:case="*">
+                    <span>未登录</span>
+                <ul class="nav dropdown-menu" id="personShow" style="display: none; position: absolute; left:-40px; top:45px;border: 1px solid black;" >
+                <li class="">
+                    <a href="/skipPage/login">登陆</a>
+                </li>
+                <li class="">
+                    <a href="/skipPage/regist">注册</a>
+                </li>
+                </ul>
+                </span>
+            </span>
+        </div>
+
+        <!--明细菜单-->
+        <div id="waijia">
+            <div id="dmenu" class="w clearfix" style="position:relative; top: 40px;left: 40px; display: none;">
+                <!-- banner上面浮层 -->
+                <div class="cat_wrap" >
+                    <div class="cat_header">
+                        <h3 class="cat_title">全部</h3>
+                        <div class="cat_list">
+                            <div class="float for1" id="food1">
+                                <ul class="clearfix">
+                                    <li style="width: 30px;"></li>
+                                    <li>工艺类型</li>
+                                </ul>
+                            </div>
+                            <div class="float for2" id="food2">
+                                <ul class="clearfix" >
+                                    <li style="width: 30px;"></li>
+                                    <li>口味分类</li>
+                                </ul>
+                            </div>
+                            <div class="float for3" id="food3">
+                                <ul class="clearfix"  >
+                                    <li style="width: 30px;"></li>
+                                    <li>难度等级</li>
+                                </ul>
+                            </div>
+                            <div class="float for4" id="food4">
+                                <ul class="clearfix"  >
+                                    <li style="width: 30px;"></li>
+                                    <li>菜系类型</li>
+                                </ul>
+                            </div>
+                            <div class="float for5" id="food5">
+                                <ul class="clearfix"  >
+                                    <li style="width: 30px;"></li>
+                                    <li>家常类型</li>
+                                </ul>
+                            </div>
+                            <div class="float for6" id="food6">
+                                <ul class="clearfix" >
+                                    <li style="width: 30px;"></li>
+                                    <li>地方小吃</li>
+                                </ul>
+                            </div>
+                            <div class="float for7" id="food7" onclick="location.href='/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid=0'">
+                                <ul class="clearfix">
+                                    <li style="width: 30px;"></li>
+                                    <li>全部菜谱</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- banner浮层滑动显示弹框 -->
+                    <div class="cat_subcont">
+                        <div id="foodleftmenu1"></div>
+                        <div id="foodleftmenu2"></div>
+                        <div id="foodleftmenu3"></div>
+                        <div id="foodleftmenu4"></div>
+                        <div id="foodleftmenu5"></div>
+                        <div id="foodleftmenu6"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="/guan/js/vendor/respond.min.js"></script>
+    <script src="/guan/js/vendor/placeholdem.min.js"></script>
+    <script src="/guan/js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="/guan/js/vendor/bootstrap.min.js"></script>
+    <script src="/guan/js/vendor/hoverIntent.js"></script>
+    <script src="/guan/js/vendor/superfish.js"></script>
+    <script src="/guan/js/vendor/jquery.actual.min.js"></script>
+    <script src="/guan/js/vendor/jquery.elastislide.js"></script>
+    <script src="/guan/js/vendor/jquery.flexslider-min.js"></script>
+    <script src="/guan/js/vendor/jquery.prettyPhoto.js"></script>
+    <script src="/guan/js/vendor/jquery.easing.1.3.js"></script>
+    <script src="/guan/js/vendor/jquery.ui.totop.js"></script>
+    <script src="/guan/js/vendor/jquery.isotope.min.js"></script>
+    <script src="/guan/js/vendor/jquery.easypiechart.min.js"></script>
+    <script src='/guan/js/vendor/jflickrfeed.min.js'></script>
+    <script src="/guan/js/vendor/jquery.sticky.js"></script>
+    <script src='/guan/js/vendor/owl.carousel.min.js'></script>
+    <script src='/guan/js/vendor/jquery.nicescroll.min.js'></script>
+    <script src='/guan/js/vendor/jquery.fractionslider.min.js'></script>
+    <script src='/guan/js/vendor/jquery.scrollTo-min.js'></script>
+    <script src='/guan/js/vendor/jquery.localscroll-min.js'></script>
+    <script src='/guan/js/vendor/jquery.parallax-1.1.3.js'></script>
+    <script src='/guan/js/vendor/jquery.funnyText.min.js'></script>
+    <script src='/guan/twitter/jquery.tweet.min.js'></script>
+    <script src="/guan/js/plugins.js"></script>
+    <script src="/guan/js/main.js"></script>
+
+
+
+    <!--侧面菜单js-->
+    <script type="text/javascript" src="/static/layui/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $("#touchThis").click(function() {
+            var d = $("#dmenu").css("display");
+
+            if (d=="none"){
+                $("#dmenu").css("display","block");
+            }else{
+                $("#dmenu").css("display","none");
+            }
+
+        })
+
+        //banner左侧内容栏
+        $(function(){
+            var thisTime;
+            //鼠标离开左侧内容栏
+            $('.cat_wrap .cat_list .float').mouseleave(function(even){
+                thisTime = setTimeout(thisMouseOut,1000);
+            });
+            //鼠标点击左侧内容栏   滑动出弹层
+            $('.cat_wrap .cat_list .float').mouseenter(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+                clearTimeout(thisTime);
+                var thisUB = $('.cat_wrap .cat_list .float').index($(this));
+                if($.trim($('.cat_subcont .cat_sublist').eq(thisUB).html()) != ""){
+                    $('.cat_subcont').addClass('active');
+                    $('.cat_sublist').hide();
+                    $('.cat_sublist').eq(thisUB).show();
+                }else{
+                    $('.cat_subcont').removeClass('active');
+                }
+            });
+            //函数——执行鼠标离开左侧内容栏的动作
+            function thisMouseOut(){
+                $('.cat_subcont').removeClass('active');
+                $('.cat_wrap .cat_list .float').removeClass('active');
+            }
+            $('.cat_subcont').mouseenter(function(){
+                clearTimeout(thisTime);
+                $('.cat_subcont').addClass('active');
+            });
+            $('.cat_subcont').mouseleave(function(){
+                $('.cat_subcont').removeClass('active');
+                $('.cat_wrap .cat_list .float').removeClass('active');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            //菜系鼠标浮动事件
+            $("#foodcx").hover(function () {
+                $.ajax({
+                    url:'/cookstyle/queryBylimit5',
+                    type:'POST',
+                    success:function (data) {
+                        var testText="";
+                        for (var i=0;i<data.length;i++){
+                            testText+=" <li class=\"\">\n" +
+                                "                            <a href=\" /front/detailMenuSearch?cookid=0&speaceid=0&tasteid=0&hardid=0&homeid=0&procesid=0&styleid="+data[i].styleid+"\" >"+data[i].stylename+"</a>\n" +
+                                "                        </li>"
+                        }
+                        var ftx = document.getElementById("foodtbodycx");
+                        ftx.innerHTML=testText;
+
+                    }
+                })
+            },function () {
+
+            });
+            //头上侧边明细菜单 鼠标浮动事件
+            $("#food1").hover(function () {
+                $.ajax({
+                    url:'/proces/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText=" <div class=\"cat_sublist\">\n" +
+                            "                        <div class=\"fore1\">\n" +
+                            "                            <div class=\"fore_list\">\n" +
+                            "                                <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                                <ul class=\"clearfix\">";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width: 80px;text-align: center;' href=\"/front/detailMenuSearch?cookid=0&speaceid=0&tasteid=0&hardid=0&styleid=0&homeid=0&procesid="+data[i].procesid+"\">"+data[i].procesname+"</a></li>"
+                        }
+                        var ftm = document.getElementById("foodleftmenu1");
+                        testText+="</ul>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>"
+                        ftm.innerHTML=testText;
+
+                    }
+                })
+            },function () {
+
+            });
+            $("#food2").hover(function () {
+                $.ajax({
+                    url:'/taste/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText="<div class=\"cat_sublist\">\n" +
+                            "                    <!-- 浮层左边列表 -->\n" +
+                            "                    <div class=\"fore1\">\n" +
+                            "                        <div class=\"fore_list\">\n" +
+                            "                            <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                            <ul class=\"clearfix\">\n";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width:80px;text-align: center; ' href=\"/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&hardid=0&styleid=0&homeid=0&tasteid="+data[i].tasteid+"\">"+data[i].tastename+"</a></li>";
+                        }
+                        var ftm = document.getElementById("foodleftmenu2");
+                        testText+="                            </ul>\n" +
+                            "                        </div>\n" +
+                            "                    </div>                    \n" +
+                            "                </div>";
+                        ftm.innerHTML=testText;
+
+                    }
+                })
+            },function () {
+
+            });
+            $("#food3").hover(function () {
+                $.ajax({
+                    url:'/hard/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText=" <div class=\"cat_sublist\">\n" +
+                            "                        <div class=\"fore1\">\n" +
+                            "                            <div class=\"fore_list\">\n" +
+                            "                                <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                                <ul class=\"clearfix\">";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width: 100px;text-align: center;' href=\"/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&styleid=0&homeid=0&hardid="+data[i].hardid+"\">"+data[i].hardname+"</a></li>"
+                        }
+                        var ftm = document.getElementById("foodleftmenu3");
+                        testText+="</ul>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>"
+                        ftm.innerHTML=testText;
+
+                    }
+                })
+            },function () {
+
+            });
+            $("#food4").hover(function () {
+                $.ajax({
+                    url:'/cookstyle/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText=" <div class=\"cat_sublist\">\n" +
+                            "                        <div class=\"fore1\">\n" +
+                            "                            <div class=\"fore_list\">\n" +
+                            "                                <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                                <ul class=\"clearfix\">";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width: 100px;text-align: center;' href=\"/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&homeid=0&styleid="+data[i].styleid+"\">"+data[i].stylename+"</a></li>"
+                        }
+                        var ftm = document.getElementById("foodleftmenu4");
+                        testText+="</ul>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>"
+                        ftm.innerHTML=testText;
+                    }
+                })
+            },function () {
+
+            });
+            $("#food5").hover(function () {
+                $.ajax({
+                    url:'/homecook/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText=" <div class=\"cat_sublist\">\n" +
+                            "                        <div class=\"fore1\">\n" +
+                            "                            <div class=\"fore_list\">\n" +
+                            "                                <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                                <ul class=\"clearfix\">";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width: 80px;text-align: center;' href=\"/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid="+data[i].homeid+"\">"+data[i].homename+"</a></li>"
+                        }
+                        var ftm = document.getElementById("foodleftmenu5");
+                        testText+="</ul>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>"
+                        ftm.innerHTML=testText;
+                    }
+                })
+            },function () {
+
+            });
+            $("#food6").hover(function () {
+                $.ajax({
+                    url:'/speacecook/findAll',
+                    type:'POST',
+                    success:function (data) {
+                        var testText=" <div class=\"cat_sublist\">\n" +
+                            "                        <div class=\"fore1\">\n" +
+                            "                            <div class=\"fore_list\">\n" +
+                            "                                <h3><a href=\"javascript:void(0);\">天下美食</a></h3>\n" +
+                            "                                <ul class=\"clearfix\">";
+                        for (var i=0;i<data.length;i++){
+                            testText+="<li><a style='display: inline-block;width: 80px;text-align: center;' href=\"/front/detailMenuSearch?cookid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid=0&speaceid="+data[i].speaceid+"\">"+data[i].speacename+"</a></li>"
+                        }
+                        var ftm = document.getElementById("foodleftmenu6");
+                        testText+="</ul>\n" +
+                            "                            </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>"
+                        ftm.innerHTML=testText;
+                    }
+                })
+
+            },function () {
+
+            });
+
+        })
+
+    </script>
+    <script type="text/javascript">
+        //鼠标浮动到img时显示下拉信息
+        $("#imglogin").hover(function () {
+           $("#personShow").css('display','block');
+        },function () {
+            $("#personShow").hover($("#personShow").css('display','block'),$("#personShow").css('display','none'));
+            $("#personShow").css('display','none');
+        })
+
+    </script>
+</header>
+
+</body>
+
+</html>

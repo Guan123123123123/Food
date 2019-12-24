@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>美食天下</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+</head>
+<body><div id="top"></div>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!--头-->
+<div th:replace="fragments/head :: header"></div>
+
+
+<section id="land" class="darkgrey_section title_section parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h3><i class="rt-icon-restaurantmenu"></i> Welcome To</h3>
+                <h1 class="funnyText">WorldFood</h1>
+
+                <p>
+                    于吃， <em>中国人有太多的话要说。</em> 追溯到遥远的从前，我们就听说过
+                    「民以食为天」。<span class="highlight">再到现在，</span> 「舌尖上的中国」家喻户
+                    晓。 <strong>我们寄托在美食上的不仅仅是味蕾的享受，</strong> 有时候更多的反而是味
+                    道带来的记忆。
+                </p>
+                <p>
+                    而美食本身， <strong>也携带着最质朴最强大的治愈效果。</strong>不论是身
+                    处异乡孤独流浪的游子，还是被紧张急促生活节奏追赶的白领，亦或是因为恋情受挫内心苦痛
+                    的小女生，<span class="highlight">好像只需要一份</span> 热腾腾的 <em>美食</em>,
+                    瞬间就带来了寒风冷雨中一股窝心的暖流。
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="box_wrap">
+
+    <section id="about" class="color_section title_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2>特色  美食</h2>
+                    <h4>克茨_克茨_</h4>
+                </div>
+                <div class="col-sm-8">
+                    <h4>地方 美食</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list2">
+                                <li>香港：烧腊</li>
+                                <li><strong>梅州：客家酿豆腐</strong> 湛江：本地鸡</li>
+                                <li><span class="highlight">延安：羊腥汤</span> 湘潭：毛家红烧
+                                    肉</li>
+                                <li><em>江苏：鸭血粉丝</em> 浙江：绍兴腐乳</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <ul class="list2">
+                                <li><em>台湾：蚵仔煎</em> 安徽：八宝肉圆</li>
+                                <li><span class="highlight">江西：瓦罐煨汤</span> 上海：南翔小
+                                    笼包</li>
+                                <li>福建：土笋冻</li>
+                                <li><strong>山东：油炸螺丝糕</strong> 台湾：大肠包小肠</li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                    <p>
+                        大连： <em>咸鱼饼子</em>  咸鱼饼子从当地农村流入城市,现在所有小馆子
+                        大饭店都吃得上。 <span class="highlight">放了姜葱盐腌,</span>腌好了用油煎的
+                        <strong>焦黄</strong>。 饼子是陈年的苞谷面掺了豆面白面发的。
+                    </p>
+
+                    <p>
+                        哈尔滨： <strong>得莫利炖活鱼</strong> 哈尔滨郊区马路边有一个叫得莫
+                        利的小村庄,村里人在路边上开了个<span class="highlight">小吃店招待路上歇脚吃饭的过路
+人。</span> 把豆腐、宽粉条子和乌苏里江里捞上来的 <em>鲤鱼</em> 炖在一起吃是老乡
+                        们吃个热乎的老做法。后来菜的做法不胫而走,传遍了城里的大街小巷。
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="color_section parallax">
+        <div class="container">
+            <div class="row to_fade">
+
+                <div class="block col-sm-3">
+                    <div class="single_teaser icons style1">
+                        <div class="icons_introimg image-icon">
+                            <i class="rt-icon-cupcake"></i>
+                        </div>
+                        <h3>家常菜谱</h3>
+                        <p class="introtext">日常菜品,道道营养,美味可口.</p>
+                        <p class="block-readmore">
+                            <a class="theme_btn readmore" href="javascript:void(0)" onclick="location.href='/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid=0'">查看详情</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="block col-sm-3">
+                    <div class="single_teaser icons style1">
+                        <div class="icons_introimg image-icon">
+                            <i class="rt-icon-wine"></i>
+                        </div>
+                        <h3>地方小吃</h3>
+                        <p class="introtext">蕴含地区特色,包含家的味道.</p>
+                        <p class="block-readmore">
+                            <a class="theme_btn readmore" href="javascript:void(0)" onclick="location.href='/front/detailMenuSearch?cookid=0&speaceid=0&procesid=0&tasteid=0&hardid=0&styleid=0&homeid=0'">查看详情</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="block col-sm-3">
+                    <div class="single_teaser icons style1">
+                        <div class="icons_introimg image-icon">
+                            <i class="rt-icon-cupcake"></i>
+                        </div>
+                        <h3>饮食文化</h3>
+                        <p class="introtext">时间堆砌用料多样饮食.</p>
+                        <p class="block-readmore">
+                            <a class="theme_btn readmore" href="#">查看详情</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="block col-sm-3">
+                    <div class="single_teaser icons style1">
+                        <div class="icons_introimg image-icon">
+                            <i class="rt-icon-wine"></i>
+                        </div>
+                        <h3>食材百科</h3>
+                        <p class="introtext">百食百效百味百科.</p>
+                        <p class="block-readmore">
+                            <a class="theme_btn readmore" href="#">查看详情</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="color_section">
+        <div class="container">
+            <div class="row to_fade">
+                <div class="col-sm-12">
+                    <h3>新鲜单品</h3>
+
+                    <!-- Horizontal Slider -->
+                    <div class="horizontal_slider_list_wrapper related-posts">
+                        <div id="horizontal_slider">
+                            <ul class="horizontal_slider_list" th:each="lis:${list5}">
+
+                                <li>
+                                    <article class="post format-standard">
+                                        <header class="entry-header">
+                                            <div class="entry-thumbnail">
+                                                <img th:src="${lis.cookimg}"  class="post-image" alt="">
+                                            </div>
+                                        </header>
+                                        <!-- .entry-header -->
+
+                                        <div class="entry-content">
+                                            <h4>
+                                                <a th:href="@{/front/blog-single(cookid=${lis.cookid})}"  rel="bookmark" th:text="${lis.cookname}"></a>
+                                            </h4>
+                                            <p th:text="${lis.cookcontent}"></p>
+                                        </div>
+
+                                    </article>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--EOF Horizontal Slider -->
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="team" class="color_section title_section parallax">
+        <div class="container">
+            <div class="row to_fade">
+                <div class="col-sm-7">
+                    <h2>食品安全</h2>
+                    <p>食品安全（food safety）指食品无毒、无害，符合应当有的营养要求，对人
+                        体健康不造成任何急性、亚急性或者慢性危害</p>
+                    <p>保持清洁，天天坚持，吃饭之前要洗手。
+                        洗手步骤要做仔细，指尖指缝不留泥。
+                        生的和熟的食物食材水果要合理安排，避免放在一起产生交叉污染，做饭时要等
+                        食物熟透，注意贮存远离细菌，易难易腐的食物放冷冻层，储存时间不能过久</p>
+                    <p class="">
+                        <a title="Twitter" href="#" class="socialico-twitter">#</a>
+                        <a title="Facebook" href="#" class="socialico-facebook">#</a>
+                        <a title="Google" href="#" class="socialico-google">#</a>
+                        <a title="Lindedin" href="#" class="socialico-linkedin">#</a>
+                        <a title="tumblr" href="#" class="socialico-skype">#</a>
+                    </p>
+                </div>
+                <div class="col-sm-5">
+                    <img src="/guan/example/teaser1.jpg" alt="" class="img-circle">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="belowcontent" class="color_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="block-header">新品饮食小视频</h2>
+                    <p>让做菜不再是困难， <strong>理解不再是障碍，</strong> 简单, 易懂, 方
+                        便, 快捷, 健康, 有爱 , 升级小厨神, <span class="highlight">不再遥不可及</span> 准备好了
+                        么?</p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6" style="width: 1200px;text-align:center;">
+
+
+                     <span th:each=" l : ${mvlist}">
+                           <div class="col-sm-4" th:title="${l.mvid}" onclick="mvClick(this)" style="margin-left: 20px;width:350px;text-align:center;display: inline-block;">
+                            <div class="thumbnail" style="background-color:#1a1a1a;border-radius: 10px;">
+                                <video class="video_back" th:src="${l.mvurl}" type="video/mp4"  loop="loop" width="300" height="200"   muted autoplay="autoplay"></video><!--muted autoplay="autoplay"  静音+自动播放  poster="/video/123.png"背景图-->
+                              <div class="caption">
+                                  <div class="block widget_tag_cloud">
+                                      <div class="tagcloud">
+                                          <a href="#" class="tag-link" style="width: 200px;text-align: center;" th:text="${l.mvcontent}"></a>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!--脚部继承-->
+    <div th:replace="fragments/footer :: footer"></div>
+
+
+</div><!-- EOF #box_wrap -->
+
+<div id="gallery_container"></div>
+
+<div class="preloader">
+    <div class="preloaderimg"></div>
+</div>
+
+
+<script src="static/layui/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" >
+    function  mvClick(obj){
+        var t = obj.title;
+        var address = "/front/gallery-single?mvid="+t;
+        window.location.href=address;
+    }
+</script>
+</body>
+</html>
+
