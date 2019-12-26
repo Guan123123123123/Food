@@ -162,4 +162,9 @@ public interface FrontDAO extends Mapper<Cookbook> {
             ")\n" +
             "</script>")
     List<Map<String,Object>> findfoodAllByMaterialname(String name);
+
+
+    @Select("  select id,titile,contents,fkid from repaly where fkid=#{param1} ")
+    List<Map<String,Object>>  findReplayById(int fkid);
+
 }
